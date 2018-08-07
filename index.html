@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/multi-style-layer.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="data/BatasAdministrasi_2.js"></script>
+        <script src="data/JaringanJalanUtama_3.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:20, minZoom:4
+        }).fitBounds([[0.16938990410348642,121.99903646790649],[1.1275757370509791,123.54106694268326]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
+        var measureControl = new L.Control.Measure({
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+            map.setMaxBounds(map.getBounds());
+        }
+        var overlay_GoogleSatellite_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            opacity: 1.0
+        });
+        overlay_GoogleSatellite_0.addTo(map);
+        var overlay_GoogleMaps_1 = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+            opacity: 1.0
+        });
+        overlay_GoogleMaps_1.addTo(map);
+        function pop_BatasAdministrasi_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? Autolinker.link(String(feature.properties['fid'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WADMKK'] !== null ? Autolinker.link(String(feature.properties['WADMKK'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_BatasAdministrasi_2_0(feature) {
+            switch(String(feature.properties['WADMKK'])) {
+                case 'Danau':
+                    return {
+                pane: 'pane_BatasAdministrasi_2',
+                opacity: 1,
+                color: 'rgba(92,92,92,1.0)',
+                dashArray: '10,5,1,5,1,5',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(92,206,57,0.25098039215686274)',
+            }
+                    break;
+                case 'Kab. Bone Bolango':
+                    return {
+                pane: 'pane_BatasAdministrasi_2',
+                opacity: 1,
+                color: 'rgba(92,92,92,1.0)',
+                dashArray: '10,5,1,5,1,5',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(213,178,62,0.25098039215686274)',
+            }
+                    break;
+                case 'Kab. Gorontalo':
+                    return {
+                pane: 'pane_BatasAdministrasi_2',
+                opacity: 1,
+                color: 'rgba(92,92,92,1.0)',
+                dashArray: '10,5,1,5,1,5',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(66,205,171,0.25098039215686274)',
+            }
+                    break;
+                case 'Kab. Gorontalo Utara':
+                    return {
+                pane: 'pane_BatasAdministrasi_2',
+                opacity: 1,
+                color: 'rgba(92,92,92,1.0)',
+                dashArray: '10,5,1,5,1,5',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(177,29,226,0.25098039215686274)',
+            }
+                    break;
+                case 'Kota Gorontalo':
+                    return {
+                pane: 'pane_BatasAdministrasi_2',
+                opacity: 1,
+                color: 'rgba(92,92,92,1.0)',
+                dashArray: '10,5,1,5,1,5',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(233,80,116,0.25098039215686274)',
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_BatasAdministrasi_2');
+        map.getPane('pane_BatasAdministrasi_2').style.zIndex = 402;
+        map.getPane('pane_BatasAdministrasi_2').style['mix-blend-mode'] = 'normal';
+        var layer_BatasAdministrasi_2 = new L.geoJson(json_BatasAdministrasi_2, {
+            attribution: '<a href=""></a>',
+            pane: 'pane_BatasAdministrasi_2',
+            onEachFeature: pop_BatasAdministrasi_2,
+            style: style_BatasAdministrasi_2_0,
+        });
+        bounds_group.addLayer(layer_BatasAdministrasi_2);
+        map.addLayer(layer_BatasAdministrasi_2);
+        function pop_JaringanJalanUtama_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? Autolinker.link(String(feature.properties['fid'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['REMARK'] !== null ? Autolinker.link(String(feature.properties['REMARK'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_JaringanJalanUtama_3_0(feature) {
+            switch(String(feature.properties['REMARK'])) {
+                case 'Jalan Arteri':
+                    return {
+                pane: 'pane_JaringanJalanUtama_3',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'round',
+                weight: 4.0,
+                fillOpacity: 0,
+            }
+                    break;
+                case 'Jalan Kolektor':
+                    return {
+                pane: 'pane_JaringanJalanUtama_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+            }
+                    break;
+                case 'Jalan Lokal':
+                    return {
+                pane: 'pane_JaringanJalanUtama_3',
+                opacity: 1,
+                color: 'rgba(88,88,88,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+            }
+                    break;
+            }
+        }
+        function style_JaringanJalanUtama_3_1(feature) {
+            switch(String(feature.properties['REMARK'])) {
+                case 'Jalan Arteri':
+                    return {
+                pane: 'pane_JaringanJalanUtama_3',
+                opacity: 1,
+                color: 'rgba(255,96,17,1.0)',
+                dashArray: '',
+                lineCap: 'round',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+            }
+                    break;
+                case 'Jalan Kolektor':
+                    return {
+                pane: 'pane_JaringanJalanUtama_3',
+                opacity: 1,
+                color: 'rgba(247,206,83,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.0,
+                fillOpacity: 0,
+            }
+                    break;
+                case 'Jalan Lokal':
+                    return {
+                pane: 'pane_JaringanJalanUtama_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_JaringanJalanUtama_3');
+        map.getPane('pane_JaringanJalanUtama_3').style.zIndex = 403;
+        map.getPane('pane_JaringanJalanUtama_3').style['mix-blend-mode'] = 'normal';
+        var layer_JaringanJalanUtama_3 = new L.geoJson.multiStyle(json_JaringanJalanUtama_3, {
+            attribution: '<a href=""></a>',
+            pane: 'pane_JaringanJalanUtama_3',
+            onEachFeature: pop_JaringanJalanUtama_3,
+            styles: [style_JaringanJalanUtama_3_0,style_JaringanJalanUtama_3_1,]
+        });
+        bounds_group.addLayer(layer_JaringanJalanUtama_3);
+        map.addLayer(layer_JaringanJalanUtama_3);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'Jaringan Jalan Utama<br /><table><tr><td style="text-align: center;"><img src="legend/JaringanJalanUtama_3_JalanArteri0.png" /></td><td>Jalan Arteri</td></tr><tr><td style="text-align: center;"><img src="legend/JaringanJalanUtama_3_JalanKolektor1.png" /></td><td>Jalan Kolektor</td></tr><tr><td style="text-align: center;"><img src="legend/JaringanJalanUtama_3_JalanLokal2.png" /></td><td>Jalan Lokal</td></tr></table>': layer_JaringanJalanUtama_3,'Batas Administrasi<br /><table><tr><td style="text-align: center;"><img src="legend/BatasAdministrasi_2_Danau0.png" /></td><td>Danau</td></tr><tr><td style="text-align: center;"><img src="legend/BatasAdministrasi_2_KabBoneBolango1.png" /></td><td>Kab. Bone Bolango</td></tr><tr><td style="text-align: center;"><img src="legend/BatasAdministrasi_2_KabGorontalo2.png" /></td><td>Kab. Gorontalo</td></tr><tr><td style="text-align: center;"><img src="legend/BatasAdministrasi_2_KabGorontaloUtara3.png" /></td><td>Kab. Gorontalo Utara</td></tr><tr><td style="text-align: center;"><img src="legend/BatasAdministrasi_2_KotaGorontalo4.png" /></td><td>Kota Gorontalo</td></tr></table>': layer_BatasAdministrasi_2,"Google Maps": overlay_GoogleMaps_1,"Google Satellite": overlay_GoogleSatellite_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
